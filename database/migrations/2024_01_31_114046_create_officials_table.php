@@ -13,18 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('officials', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('barangay_id');
             $table->string('name');
             $table->bigInteger('position_id');
-            $table->bigInteger('barangay_id');
-            $table->enum('access_level', ['barangay', 'municipal', 'provincial', 'admin']);
-            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('avatar')->nullable();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -36,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('officials');
     }
 };
