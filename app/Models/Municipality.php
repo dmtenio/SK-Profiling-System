@@ -8,4 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Municipality extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['province_id', 'name'];
+
+    // Relationships
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
+    }
+
+    public function barangays()
+    {
+        return $this->hasMany(Barangay::class);
+    }
+    
 }
