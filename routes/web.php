@@ -2,6 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\RegionController;
+use App\Http\Controllers\ProvinceController;
+use App\Http\Controllers\MunicipalityController;
+use App\Http\Controllers\BarangayController;
+use App\Http\Controllers\PurokController;
+use App\Http\Controllers\PositionController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\OfficialController;
+use App\Http\Controllers\ResidentController;
+use Illuminate\Support\Facades\Auth;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -20,3 +31,103 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+
+// Region routes
+Route::resource('regions', RegionController::class)->names([
+    'index' => 'regions.index',
+    'show' => 'regions.show',
+    'create' => 'regions.create',
+    'store' => 'regions.store',
+    'edit' => 'regions.edit',
+    'update' => 'regions.update',
+    'destroy' => 'regions.destroy',
+]);
+
+// Province routes
+Route::resource('provinces', ProvinceController::class)->names([
+    'index' => 'provinces.index',
+    'show' => 'provinces.show',
+    'create' => 'provinces.create',
+    'store' => 'provinces.store',
+    'edit' => 'provinces.edit',
+    'update' => 'provinces.update',
+    'destroy' => 'provinces.destroy',
+]);
+
+// Municipality routes
+Route::resource('municipalities', MunicipalityController::class)->names([
+    'index' => 'municipalities.index',
+    'show' => 'municipalities.show',
+    'create' => 'municipalities.create',
+    'store' => 'municipalities.store',
+    'edit' => 'municipalities.edit',
+    'update' => 'municipalities.update',
+    'destroy' => 'municipalities.destroy',
+]);
+
+// Barangay routes
+Route::resource('barangays', BarangayController::class)->names([
+    'index' => 'barangays.index',
+    'show' => 'barangays.show',
+    'create' => 'barangays.create',
+    'store' => 'barangays.store',
+    'edit' => 'barangays.edit',
+    'update' => 'barangays.update',
+    'destroy' => 'barangays.destroy',
+]);
+
+// Purok routes
+Route::resource('puroks', PurokController::class)->names([
+    'index' => 'puroks.index',
+    'show' => 'puroks.show',
+    'create' => 'puroks.create',
+    'store' => 'puroks.store',
+    'edit' => 'puroks.edit',
+    'update' => 'puroks.update',
+    'destroy' => 'puroks.destroy',
+]);
+
+// Position routes
+Route::resource('positions', PositionController::class)->names([
+    'index' => 'positions.index',
+    'show' => 'positions.show',
+    'create' => 'positions.create',
+    'store' => 'positions.store',
+    'edit' => 'positions.edit',
+    'update' => 'positions.update',
+    'destroy' => 'positions.destroy',
+]);
+
+// User routes
+Route::resource('users', UserController::class)->names([
+    'index' => 'users.index',
+    'show' => 'users.show',
+    'create' => 'users.create',
+    'store' => 'users.store',
+    'edit' => 'users.edit',
+    'update' => 'users.update',
+    'destroy' => 'users.destroy',
+]);
+
+// Official routes
+Route::resource('officials', OfficialController::class)->names([
+    'index' => 'officials.index',
+    'show' => 'officials.show',
+    'create' => 'officials.create',
+    'store' => 'officials.store',
+    'edit' => 'officials.edit',
+    'update' => 'officials.update',
+    'destroy' => 'officials.destroy',
+]);
+
+// Resident routes
+Route::resource('residents', ResidentController::class)->names([
+    'index' => 'residents.index',
+    'show' => 'residents.show',
+    'create' => 'residents.create',
+    'store' => 'residents.store',
+    'edit' => 'residents.edit',
+    'update' => 'residents.update',
+    'destroy' => 'residents.destroy',
+]);
