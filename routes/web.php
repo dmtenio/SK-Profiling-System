@@ -11,6 +11,7 @@ use App\Http\Controllers\PositionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OfficialController;
 use App\Http\Controllers\ResidentController;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -28,10 +29,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register'=>false]);
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+Route::get('profile/{id}', [UserController::class, 'showprofile'])->name('profile.edit');
+Route::patch('update-profile/{id}', [UserController::class, 'updateprofile'])->name('update.profile');
+Route::post('/change-password', [UserController::class, 'changePassword'] )->name('change-password');
+
+// Add a route to handle AJAX request for getting provinces based on the selected region
+Route::get('/get-provinces/{regionId}', [MunicipalityController::class, 'getProvinces']);
 
 // Region routes
 Route::resource('regions', RegionController::class)->names([

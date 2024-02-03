@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Region;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class RegionController extends Controller
 {
@@ -12,10 +13,31 @@ class RegionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    // public function index()
+    // {
+    //     $regions = Region::get();
+    //     return view('regions.index',compact('regions'));
+    // }
+    
+    public function index(Request $request)
     {
-        //
+        $regions = Region::get();
+
+        if($request->ajax()){
+
+            // return DataTables::of($regions)->toJson();
+            return DataTables::of($regions)
+            ->addIndexColumn()
+            ->addColumn('action',function($region){
+                return view('regions.actions.btn', compact('region'));
+                // return '<a href="" class="btn btn-primary btn-sm">Edit</a>';
+            })
+            ->toJson();
+        }
+
+        return view('regions.index',compact('regions'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -35,7 +57,17 @@ class RegionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+        
+        Region::create([
+            'name'=>$request->name,
+        ]);
+
+        //redirect to region list
+        return redirect()->route('regions.index')->with('success','Region Successfully added!');
+
     }
 
     /**
@@ -69,7 +101,20 @@ class RegionController extends Controller
      */
     public function update(Request $request, Region $region)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+    
+        $region->update([
+            'name' => $request->name,
+        ]);
+
+        // $region->name=$request->name;
+        // $region->save();
+
+          //redirect to region list
+          return redirect()->route('regions.index')->with('success','Region Successfully updated!');
+
     }
 
     /**
@@ -80,6 +125,10 @@ class RegionController extends Controller
      */
     public function destroy(Region $region)
     {
-        //
+        $region->delete();
+
+        //redirect to region list
+        return redirect()->route('regions.index')->with('success','Region Successfully deleted!');
+
     }
 }

@@ -19,7 +19,7 @@ class User extends Authenticatable
      */
   
      protected $fillable = [
-        'position_id', 'barangay_id', 'access_level', 'status', 'avatar',
+        'position_id', 'barangay_id', 'access_type', 'status', 'avatar',
         'email', 'password'
     ];
 
@@ -31,7 +31,7 @@ class User extends Authenticatable
 
     public function barangay()
     {
-        return $this->belongsTo(Barangay::class)->nullable();
+        return $this->belongsTo(Barangay::class);
     }
 
     public function officials()

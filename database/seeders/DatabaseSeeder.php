@@ -15,5 +15,15 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
+        $this->call([
+            RegionTableSeeder::class,
+            ProvinceTableSeeder::class,
+            MunicipalityTableSeeder::class,
+            BarangayTableSeeder::class,
+            PurokTableSeeder::class,
+            OfficialTableSeeder::class,
+            PositionTableSeeder::class,
+            UserTableSeeder::class,
+        ]);
     }
 }

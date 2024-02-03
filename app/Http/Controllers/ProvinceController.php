@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Province;
+use App\Models\Region;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProvinceController extends Controller
 {
@@ -12,9 +14,28 @@ class ProvinceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $regions = Region::all(); // Fetch regions
+        
+        $provinces = Province::with(['region'])->get();
+        // $provinces = Province::get();
+
+        view()->share('regions', $regions);
+
+        if($request->ajax()){
+
+            return DataTables::of($provinces)
+            ->addIndexColumn()
+            ->addColumn('action',function($province){
+                return view('provinces.actions.btn', compact('province'),);
+            })
+            ->toJson();
+        }
+
+        return view('provinces.index', compact('provinces', 'regions'));
+
+
     }
 
     /**
@@ -35,7 +56,19 @@ class ProvinceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'region_id' => 'required|exists:regions,id',
+            'name' => 'required|string|max:255',
+        ]);
+        
+        Province::create([
+            'region_id' => $request->region_id,
+            'name'=>$request->name,
+        ]);
+
+        //redirect to province list
+        return redirect()->route('provinces.index')->with('success','Province Successfully added!');
+
     }
 
     /**
@@ -69,7 +102,22 @@ class ProvinceController extends Controller
      */
     public function update(Request $request, Province $province)
     {
-        //
+        $request->validate([
+            'region_id' => 'required|exists:regions,id',
+            'name' => 'required|string|max:255',
+        ]);
+    
+        $province->update([
+            'region_id' => $request->region_id,
+            'name' => $request->name,
+        ]);
+
+        // $province->name=$request->name;
+        // $province->save();
+
+          //redirect to region list
+          return redirect()->route('provinces.index')->with('success','Province Successfully updated!');
+
     }
 
     /**
@@ -80,6 +128,10 @@ class ProvinceController extends Controller
      */
     public function destroy(Province $province)
     {
-        //
+        $province->delete();
+
+        //redirect to province list
+        return redirect()->route('provinces.index')->with('success','Province Successfully deleted!');
+
     }
 }

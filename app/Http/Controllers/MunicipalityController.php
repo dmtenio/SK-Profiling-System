@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Municipality;
+use App\Models\Province;
+use App\Models\Region;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class MunicipalityController extends Controller
 {
@@ -12,10 +15,43 @@ class MunicipalityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index(Request $request)
+{
+    $municipalities = Municipality::with('province.region')->get();
+    $provinces = Province::get();
+    $regions = Region::get();
+
+    view()->share('municipalities', $municipalities);
+    view()->share('provinces', $provinces);
+    view()->share('regions', $regions);
+
+    if ($request->ajax()) {
+        
+        return DataTables::of($municipalities)
+            ->addIndexColumn()
+            ->addColumn('province_name', function ($municipality) {
+                return $municipality->province->name;
+            })
+            ->addColumn('region_name', function ($municipality) {
+                return $municipality->province->region->name;
+            })
+            ->addColumn('action', function ($municipality) {
+                return view('municipalities.actions.btn', compact('municipality'));
+            })
+            ->toJson();
     }
+
+    return view('municipalities.index', compact('municipalities', 'provinces', 'regions'));
+}
+
+
+    //AJAX for dependent select2
+    public function getProvinces($regionId)
+    {
+        $provinces = Province::where('region_id', $regionId)->get();
+        return response()->json($provinces);
+    }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -82,4 +118,7 @@ class MunicipalityController extends Controller
     {
         //
     }
+
+    
+
 }

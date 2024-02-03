@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Position;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PositionController extends Controller
 {
@@ -12,9 +13,23 @@ class PositionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $positions = Position::get();
+
+        if($request->ajax()){
+
+            // return DataTables::of($positions)->toJson();
+            return DataTables::of($positions)
+            ->addIndexColumn()
+            ->addColumn('action',function($position){
+                return view('positions.actions.btn', compact('position'));
+                // return '<a href="" class="btn btn-primary btn-sm">Edit</a>';
+            })
+            ->toJson();
+        }
+
+        return view('positions.index',compact('positions'));
     }
 
     /**
@@ -35,7 +50,17 @@ class PositionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+        
+        Position::create([
+            'name'=>$request->name,
+        ]);
+
+        //redirect to position list
+        return redirect()->route('positions.index')->with('success','Position Successfully added!');
+
     }
 
     /**
@@ -69,7 +94,20 @@ class PositionController extends Controller
      */
     public function update(Request $request, Position $position)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+    
+        $position->update([
+            'name' => $request->name,
+        ]);
+
+        // $position->name=$request->name;
+        // $position->save();
+
+          //redirect to position list
+          return redirect()->route('positions.index')->with('success','Position Successfully updated!');
+
     }
 
     /**
@@ -80,6 +118,10 @@ class PositionController extends Controller
      */
     public function destroy(Position $position)
     {
-        //
+        $position->delete();
+
+        //redirect to position list
+        return redirect()->route('positions.index')->with('success','Position Successfully deleted!');
+
     }
 }
