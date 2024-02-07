@@ -88,15 +88,15 @@
                     <div class="col-lg-3 col-md-4 label">Account Type</div>
                     <div class="col-lg-9 col-md-8">            
                      
-                      @if (Auth::user()->access_type === 'barangay_user')
+                      @if (Auth::user()->account_type === 'barangay_user')
                       <span>Barangay {{ Auth::user()->barangay->name }} User</span>
-                      @elseif (Auth::user()->access_type === 'barangay_admin') 
+                      @elseif (Auth::user()->account_type === 'barangay_admin') 
                       <span>Barangay {{ Auth::user()->barangay->name }} Admin</span>      
-                      @elseif (Auth::user()->access_type === 'municipal_admin') 
+                      @elseif (Auth::user()->account_type === 'municipal_admin') 
                       <span>Municipal Admin</span>
-                      @elseif (Auth::user()->access_type === 'provincial_admin') 
+                      @elseif (Auth::user()->account_type === 'provincial_admin') 
                       <span>Provincial Admin</span>
-                      @elseif (Auth::user()->access_type === 'super_admin') 
+                      @elseif (Auth::user()->account_type === 'super_admin') 
                       <span>Super Admin</span>
                       @endif
 
@@ -214,15 +214,15 @@
                       <label for="account_type" class="col-md-4 col-lg-3 col-form-label">Account Type</label>
                       <div class="col-md-8 col-lg-9">
                           <span class="form-control" id="account_type">
-                              @if ($user->access_type === 'barangay_user')
+                              @if ($user->account_type === 'barangay_user')
                                   Barangay {{ $user->barangay->name }} User
-                              @elseif ($user->access_type === 'barangay_admin') 
+                              @elseif ($user->account_type === 'barangay_admin') 
                                   Barangay {{ $user->barangay->name }} Admin
-                              @elseif ($user->access_type === 'municipal_admin') 
+                              @elseif ($user->account_type === 'municipal_admin') 
                                   Municipal Admin
-                              @elseif ($user->access_type === 'provincial_admin') 
+                              @elseif ($user->account_type === 'provincial_admin') 
                                   Provincial Admin
-                              @elseif ($user->access_type === 'super_admin') 
+                              @elseif ($user->account_type === 'super_admin') 
                                   Super Admin
                               @endif
                           </span>

@@ -49,15 +49,15 @@
           <h6>{{ Auth::user()->name }}</h6>                                              
           {{-- <h6>{{ implode(' ', array_filter([Auth::user()->first_name, Auth::user()->middle_name ? substr(Auth::user()->middle_name, 0, 1).'.' : '', Auth::user()->last_name])) }}</h6>           --}}
           
-          @if (Auth::user()->access_type === 'barangay_user')
+          @if (Auth::user()->account_type === 'barangay_user')
           <span>Barangay User</span>
-          @elseif (Auth::user()->access_type === 'barangay_admin') 
+          @elseif (Auth::user()->account_type === 'barangay_admin') 
           <span>Barangay Admin</span>
-          @elseif (Auth::user()->access_type === 'municipal_admin') 
+          @elseif (Auth::user()->account_type === 'municipal_admin') 
           <span>Municipal Admin</span>
-          @elseif (Auth::user()->access_type === 'provincial_admin') 
+          @elseif (Auth::user()->account_type === 'provincial_admin') 
           <span>Provincial Admin</span>
-          @elseif (Auth::user()->access_type === 'super_admin') 
+          @elseif (Auth::user()->account_type === 'super_admin') 
           <span>Super Admin</span>
           @endif
           

@@ -1,7 +1,8 @@
 <div class="btn-group" role="group" aria-label="Action Group">
 
     <!-- Button trigger edit modal -->
-    <button type="button" class="btn btn-primary btn-sm modal-edit" title="Edit" data-id="{{$municipality->id}}" onclick="showEditMunicipalityModal(this)">
+    {{-- <button type="button" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#modelIdEdit-{{$municipality->id}}"> --}}
+    <button type="button" class="btn btn-primary btn-sm modal-edit" title="Edit" data-id="{{$municipality->id}}" onclick="showEditProvinceModal(this)">
 
       <i class="bi bi-pencil-square"></i>
     <!-- Edit -->
@@ -31,25 +32,31 @@
 @method('PUT') 
 <div class="modal-body">
 
+<div class="mb-3">
+<label for="region" class="form-label">Region</label>
+<select class="form-select edit-region" name="region" id="edit_region_id_{{$municipality->id}}" data-placeholder="Select a region">
+<option></option>
+@foreach ($regions as $region)
+<option value="{{ $region->id }}" {{ $municipality->province->region_id == $region->id ? 'selected' : '' }}>{{ $region->name }}</option>
+@endforeach
+</select>
+</div>
 
 <div class="mb-3">
-    <label for="province" class="form-label">Province</label>
-    <select class="form-select edit-municipality" name="province_id" id="edit_municipality_id_{{$municipality->id}}" data-placeholder="Select a province">
-    <option></option>
-    @foreach ($provinces as $province)
-    <option value="{{ $province->id }}" {{ $municipality->province->id == $province->id ? 'selected' : '' }}>{{ $province->name }}</option>
-    @endforeach
-    </select>    
+<label for="province" class="form-label">Province</label>
+<select class="form-select edit-province" name="province" id="edit_province_id_{{$municipality->id}}" data-placeholder="Select a province">
+<option></option>
+@foreach ($provinces as $province)
+<option value="{{ $province->id }}" {{ $municipality->province_id == $province->id ? 'selected' : '' }}>{{ $province->name }}</option>
+@endforeach
+</select>    
 </div>
+
 
 <div class="mb-3">
 <label for="name" class="form-label">Name</label>
 <input type="text" class="form-control" id="edit_name" placeholder="Input Municipality Name" name="name" required value="{{ old('name',$municipality->name)}}">
 </div>
-
-
-    
-
 </div>
 <div class="modal-footer">
 <button type="submit" class="btn btn-primary">Update</button>

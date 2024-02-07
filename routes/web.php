@@ -38,8 +38,8 @@ Route::get('profile/{id}', [UserController::class, 'showprofile'])->name('profil
 Route::patch('update-profile/{id}', [UserController::class, 'updateprofile'])->name('update.profile');
 Route::post('/change-password', [UserController::class, 'changePassword'] )->name('change-password');
 
-// Add a route to handle AJAX request for getting provinces based on the selected region
-Route::get('/get-provinces/{regionId}', [MunicipalityController::class, 'getProvinces']);
+// // Add a route to handle AJAX request for getting provinces based on the selected region
+// Route::get('/get-provinces/{regionId}', [MunicipalityController::class, 'getProvinces']);
 
 // Region routes
 Route::resource('regions', RegionController::class)->names([

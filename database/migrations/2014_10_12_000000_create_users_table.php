@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->bigInteger('position_id');
             $table->bigInteger('barangay_id');
-            $table->enum('access_type', ['barangay_user','', 'barangay_admin', 'provincial_admin', 'super_admin']);
+            $table->enum('account_type', ['barangay_user','barangay_admin', 'municipal_admin', 'provincial_admin', 'super_admin']);
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->string('avatar')->nullable();
             $table->string('email')->unique();

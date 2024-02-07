@@ -20,7 +20,7 @@ class UserTableSeeder extends Seeder
             'name' => 'Dalimark M. Tenio',
             'position_id' => 1,
             'barangay_id' => 166802005,
-            'access_type' => 'barangay_admin',
+            'account_type' => 'barangay_admin',
             'status' => 'active',
             'avatar' => null,
             'email' => 'dalimarktenio@gmail.com',
