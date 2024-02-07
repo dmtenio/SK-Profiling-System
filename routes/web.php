@@ -38,6 +38,14 @@ Route::get('profile/{id}', [UserController::class, 'showprofile'])->name('profil
 Route::patch('update-profile/{id}', [UserController::class, 'updateprofile'])->name('update.profile');
 Route::post('/change-password', [UserController::class, 'changePassword'] )->name('change-password');
 
+Route::middleware(['auth', 'checkUserRole:barangay_user,barangay_admin,municipal_admin,provincial_admin,super_admin'])->group(function () {
+    Route::get('profile/{id}', [UserController::class, 'showprofile'])->name('profile.edit');
+    Route::patch('update-profile/{id}', [UserController::class, 'updateprofile'])->name('update.profile');
+    Route::post('/change-password', [UserController::class, 'changePassword'])->name('change-password');
+});
+
+
+
 // // Add a route to handle AJAX request for getting provinces based on the selected region
 // Route::get('/get-provinces/{regionId}', [MunicipalityController::class, 'getProvinces']);
 
@@ -107,16 +115,20 @@ Route::resource('positions', PositionController::class)->names([
     'destroy' => 'positions.destroy',
 ]);
 
-// User routes
-Route::resource('users', UserController::class)->names([
-    'index' => 'users.index',
-    'show' => 'users.show',
-    'create' => 'users.create',
-    'store' => 'users.store',
-    'edit' => 'users.edit',
-    'update' => 'users.update',
-    'destroy' => 'users.destroy',
-]);
+
+// User routes with middleware
+Route::middleware(['auth', 'checkUserRole:barangay_admin,municipal_admin,provincial_admin,super_admin'])
+    ->resource('users', UserController::class)
+    ->names([
+        'index' => 'users.index',
+        'show' => 'users.show',
+        'create' => 'users.create',
+        'store' => 'users.store',
+        'edit' => 'users.edit',
+        'update' => 'users.update',
+        'destroy' => 'users.destroy',
+    ]);
+
 
 // Official routes
 Route::resource('officials', OfficialController::class)->names([

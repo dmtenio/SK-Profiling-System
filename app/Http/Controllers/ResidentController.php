@@ -11,8 +11,10 @@ class ResidentController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('checkUserRole:barangay_user,barangay_admin,municipal_admin,provincial_admin,super_admin');
+
     }
-    
+
     /**
      * Display a listing of the resource.
      *
