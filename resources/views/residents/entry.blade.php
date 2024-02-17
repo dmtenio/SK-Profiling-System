@@ -40,14 +40,20 @@
                             </div>
                         </div>
 
+                    
+                        
+
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="purok" class="form-label">Purok/Zone</label>
-                                <select name="purok_id" id="purok" class="form-control select2">
+                                {{-- <select name="purok_id" id="purok" class="form-control select2">
                                     <option value=""></option>
                                     @foreach ($puroks as $purok)
                                         <option value="{{ $purok->id }}">{{ $purok->name }}</option>
                                     @endforeach
+                                </select> --}}
+                                <select name="purok_id" id="purok" class="form-control select2">
+                                    <option value=""></option>
                                 </select>
                             </div>
                             <div class="col">
@@ -532,6 +538,43 @@
             width: '100%',
             placeholder: 'Select an option'
         });
+
+    // Check if barangay is already selected
+    var selectedBarangayId = $('#barangay').val();
+    if (selectedBarangayId) {
+        fetchPuroks(selectedBarangayId);
+    }
+
+    // Add event listener to barangay dropdown
+    $('#barangay').change(function() {
+        var barangayId = $(this).val();
+        if (barangayId) {
+            fetchPuroks(barangayId);
+        } else {
+            // Clear purok dropdown if no barangay selected
+            $('#purok').empty();
+        }
+    });
+
+    function fetchPuroks(barangayId) {
+        $.ajax({
+            url: '{{ route("fetch.puroks") }}',
+            type: 'GET',
+            data: {barangay_id: barangayId},
+            success: function(response) {
+                var puroks = response.puroks;
+                $('#purok').empty();
+                $('#purok').append($('<option>', {value: '', text: ''}));
+                $.each(puroks, function(index, purok) {
+                    $('#purok').append($('<option>', {value: purok.id, text: purok.name}));
+                });
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+
     });
 
 

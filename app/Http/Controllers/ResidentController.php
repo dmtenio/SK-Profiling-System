@@ -20,6 +20,14 @@ class ResidentController extends Controller
 
     }
 
+
+    public function fetchPuroks(Request $request)
+    {
+        $barangayId = $request->barangay_id;
+        $puroks = Purok::where('barangay_id', $barangayId)->get();
+        return response()->json(['puroks' => $puroks]);
+    }
+
     /**
      * Display a listing of the resource.
      *
