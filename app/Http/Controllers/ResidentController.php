@@ -21,11 +21,28 @@ class ResidentController extends Controller
     }
 
 
-    public function fetchPuroks(Request $request)
+    public function getProvinces($region_id)
     {
-        $barangayId = $request->barangay_id;
-        $puroks = Purok::where('barangay_id', $barangayId)->get();
-        return response()->json(['puroks' => $puroks]);
+        $provinces = Province::where('region_id', $region_id)->get();
+        return response()->json($provinces);
+    }
+
+    public function getMunicipalities($province_id)
+    {
+        $municipalities = Municipality::where('province_id', $province_id)->get();
+        return response()->json($municipalities);
+    }
+
+    public function getBarangays($municipality_id)
+    {
+        $barangays = Barangay::where('municipality_id', $municipality_id)->get();
+        return response()->json($barangays);
+    }
+
+    public function getPuroks($barangay_id)
+    {
+        $puroks = Purok::where('barangay_id', $barangay_id)->get();
+        return response()->json($puroks);
     }
 
     /**

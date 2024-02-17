@@ -44,7 +44,10 @@ Route::middleware(['auth', 'checkUserRole:barangay_user,barangay_admin,municipal
     Route::post('/change-password', [UserController::class, 'changePassword'])->name('change-password');
 });
 
-Route::get('/fetch-puroks', [ResidentController::class, 'fetchPuroks'])->name('fetch.puroks');
+Route::get('get-provinces/{region_id}', [ResidentController::class, 'getProvinces']);
+Route::get('get-municipalities/{province_id}', [ResidentController::class, 'getMunicipalities']);
+Route::get('get-barangays/{municipality_id}', [ResidentController::class, 'getBarangays']);
+Route::get('get-puroks/{barangay_id}', [ResidentController::class, 'getPuroks']);
 
 
 // // Add a route to handle AJAX request for getting provinces based on the selected region

@@ -46,15 +46,13 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label for="purok" class="form-label">Purok/Zone</label>
-                                {{-- <select name="purok_id" id="purok" class="form-control select2">
+                                <select name="purok_id" id="purok" class="form-control select2">
                                     <option value=""></option>
                                     @foreach ($puroks as $purok)
                                         <option value="{{ $purok->id }}">{{ $purok->name }}</option>
                                     @endforeach
-                                </select> --}}
-                                <select name="purok_id" id="purok" class="form-control select2">
-                                    <option value=""></option>
                                 </select>
+                               
                             </div>
                             <div class="col">
                                 <label for="barangay" class="form-label">Barangay</label>
@@ -539,42 +537,72 @@
             placeholder: 'Select an option'
         });
 
-    // Check if barangay is already selected
-    var selectedBarangayId = $('#barangay').val();
-    if (selectedBarangayId) {
-        fetchPuroks(selectedBarangayId);
-    }
-
-    // Add event listener to barangay dropdown
-    $('#barangay').change(function() {
-        var barangayId = $(this).val();
-        if (barangayId) {
-            fetchPuroks(barangayId);
-        } else {
-            // Clear purok dropdown if no barangay selected
-            $('#purok').empty();
-        }
-    });
-
-    function fetchPuroks(barangayId) {
-        $.ajax({
-            url: '{{ route("fetch.puroks") }}',
-            type: 'GET',
-            data: {barangay_id: barangayId},
-            success: function(response) {
-                var puroks = response.puroks;
-                $('#purok').empty();
-                $('#purok').append($('<option>', {value: '', text: ''}));
-                $.each(puroks, function(index, purok) {
-                    $('#purok').append($('<option>', {value: purok.id, text: purok.name}));
+        $('#region').change(function() {
+            var regionId = $(this).val();
+            if(regionId) {
+                $.ajax({
+                    type: "GET",
+                    url: "/get-provinces/" + regionId,
+                    success: function(data) {
+                        $('#province').empty();
+                        $.each(data, function(key, value) {
+                            $('#province').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+                    }
                 });
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                console.error(xhr.responseText);
             }
         });
-    }
 
+        $('#province').change(function() {
+            var provinceId = $(this).val();
+            if(provinceId) {
+                $.ajax({
+                    type: "GET",
+                    url: "/get-municipalities/" + provinceId,
+                    success: function(data) {
+                        $('#city_municipality').empty();
+                        $.each(data, function(key, value) {
+                            $('#city_municipality').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+                    }
+                });
+            }
+        });
+
+        $('#city_municipality').change(function() {
+            var municipalityId = $(this).val();
+            if(municipalityId) {
+                $.ajax({
+                    type: "GET",
+                    url: "/get-barangays/" + municipalityId,
+                    success: function(data) {
+                        $('#barangay').empty();
+                        $.each(data, function(key, value) {
+                            $('#barangay').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+                    }
+                });
+            }
+        });
+
+        $('#barangay').change(function() {
+            var barangayId = $(this).val();
+            if(barangayId) {
+                $.ajax({
+                    type: "GET",
+                    url: "/get-puroks/" + barangayId,
+                    success: function(data) {
+                        $('#purok').empty();
+                        $.each(data, function(key, value) {
+                            $('#purok').append('<option value="' + value.id + '">' + value.name + '</option>');
+                        });
+                    }
+                });
+            }
+        });
+
+
+        
     });
 
 
