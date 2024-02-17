@@ -8,7 +8,9 @@ use App\Models\Province;
 use App\Models\Purok;
 use App\Models\Region;
 use App\Models\Resident;
+use DateTime;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class ResidentController extends Controller
 {
@@ -122,10 +124,129 @@ class ResidentController extends Controller
         
     }
 
-     public function index()
+    //  public function index()
+    // {
+    //     //
+    // }
+
+    public function index(Request $request)
     {
-        //
+        // Retrieve the authenticated user
+        $user = auth()->user();
+    
+        $barangays = null; // Initialize $barangays variable
+        $youths = null; // Initialize $youths variable
+    
+        if ($user) {
+            if ($user->account_type == 'barangay_user' || $user->account_type == 'barangay_admin') {
+                // If user is barangay admin, only show users in the same barangay
+                $youths = Resident::with('barangay.municipality')
+                    ->where('barangay_id', $user->barangay->id)
+                    ->get();
+    
+                $barangays = [$user->barangay];
+            } elseif ($user->account_type == 'municipal_admin' && $user->barangay) {
+                // If user is municipal admin, show users under the municipality
+                $municipality = $user->barangay->municipality;
+    
+                $youths = Resident::with('barangay.municipality')
+                    ->whereHas('barangay', function ($query) use ($municipality) {
+                        $query->where('municipality_id', $municipality->id);
+                    })
+                    ->get();
+    
+                $barangays = $municipality->barangays;
+            } elseif ($user->account_type == 'provincial_admin') {
+                // If user is provincial admin, show all users in the province
+                $province = $user->barangay->municipality->province;
+    
+                $youths = Resident::with('barangay.municipality.province')
+                    ->whereHas('barangay.municipality', function ($query) use ($province) {
+                        $query->where('province_id', $province->id);
+                    })
+                    ->get();
+    
+                $barangays = Barangay::whereHas('municipality', function ($query) use ($province) {
+                    $query->where('province_id', $province->id);
+                })->get();
+            } elseif ($user->account_type == 'super_admin') {
+                // If user is super admin, show all users
+                $youths = Resident::with('barangay.municipality.province')->get();
+                $barangays = Barangay::with('municipality.province')->get();
+            }
+        }
+    
+        if ($request->ajax()) {
+            return DataTables::of($youths)
+                ->addIndexColumn()
+                ->addColumn('DT_RowIndex', function ($youth) {
+                    return $youth->id; // Assuming you want to use the user ID as the row index
+                })
+                ->addColumn('name', function ($youth) {
+                    $fullName = $youth->last_name . ', ' . $youth->first_name;
+                    
+                    if ($youth->middle_name) {
+                        $fullName .= ' ' . $youth->middle_name;
+                    }
+                    
+                    if ($youth->suffix) {
+                        $fullName .= ' ' . $youth->suffix;
+                    }
+                    
+                    return $fullName;
+                })
+                
+                // ->addColumn('age', function ($youth) {
+                //     return $youth->age;
+                // })
+                ->addColumn('age', function ($youth) {
+                    // Calculate the difference in years between the current date and date of birth
+                    $dob = new DateTime($youth->dob);
+                    $now = new DateTime();
+                    $age = $dob->diff($now)->y;
+                    
+                    return $age;
+                })
+                
+                ->addColumn('gender', function ($youth) {
+                    return $youth->gender;
+                })
+                ->addColumn('civil_status', function ($youth) {
+                    return $youth->civil_status;
+                })
+                ->addColumn('address', function ($youth) {
+                    $address = $youth->purok ? $youth->purok->name . ', ' : '';
+                    $address .= $youth->barangay->name;
+                
+                    $userType = auth()->user()->account_type;
+                
+                    if ($userType === 'barangay_admin' || $userType === 'barangay_user') {
+                        // Display Purok, Barangay
+                        return $address;
+                    } elseif ($userType === 'municipal_admin') {
+                        // Display Purok, Barangay, Municipality
+                        $address .= ', ' . $youth->barangay->municipality->name;
+                    } elseif ($userType === 'provincial_admin') {
+                        // Display Purok, Barangay, Municipality, Province
+                        $address .= ', ' . $youth->barangay->municipality->province->name;
+                    } elseif ($userType === 'super_admin') {
+                        // Display Purok, Barangay, Municipality, Province, Region
+                        $address .= ', ' . $youth->barangay->municipality->province->region->name;
+                    }
+                
+                    return $address;
+                })
+                
+                ->addColumn('action', function ($youth) {
+                    return view('residents.actions.btn', compact('youth'))->render();
+                })
+                ->rawColumns(['status', 'action'])
+                ->toJson();
+        }
+    
+        return view('residents.index', compact('youths'));
     }
+
 
     /**
      * Show the form for creating a new resource.
