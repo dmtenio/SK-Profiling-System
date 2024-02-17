@@ -34,9 +34,9 @@ Auth::routes(['register'=>false]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::get('profile/{id}', [UserController::class, 'showprofile'])->name('profile.edit');
-Route::patch('update-profile/{id}', [UserController::class, 'updateprofile'])->name('update.profile');
-Route::post('/change-password', [UserController::class, 'changePassword'] )->name('change-password');
+// Route::get('profile/{id}', [UserController::class, 'showprofile'])->name('profile.edit');
+// Route::patch('update-profile/{id}', [UserController::class, 'updateprofile'])->name('update.profile');
+// Route::post('/change-password', [UserController::class, 'changePassword'] )->name('change-password');
 
 Route::middleware(['auth', 'checkUserRole:barangay_user,barangay_admin,municipal_admin,provincial_admin,super_admin'])->group(function () {
     Route::get('profile/{id}', [UserController::class, 'showprofile'])->name('profile.edit');
@@ -140,6 +140,8 @@ Route::resource('officials', OfficialController::class)->names([
     'update' => 'officials.update',
     'destroy' => 'officials.destroy',
 ]);
+
+Route::get('resident/youth/entry', [ResidentController::class, 'entry'])->name('residents.entry');
 
 // Resident routes
 Route::resource('residents', ResidentController::class)->names([

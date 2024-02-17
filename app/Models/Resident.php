@@ -10,7 +10,7 @@ class Resident extends Model
     use HasFactory;
 
     protected $fillable = [
-        'last_name', 'first_name', 'middle_name', 'suffix', 'purok_id',
+        'last_name', 'first_name', 'middle_name', 'suffix', 'purok_id','barangay_id',
         'gender', 'age', 'dob', 'civil_status', 'email', 'mobile_num',
         'is_youth', 'is_living', 'youth_group', 'educational_background',
         'youth_classification', 'youth_specific_needs', 'work_status',

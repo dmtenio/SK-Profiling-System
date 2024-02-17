@@ -21,12 +21,14 @@ return new class extends Migration
             $table->string('middle_name')->nullable();
             $table->string('suffix')->nullable();
             $table->bigInteger('purok_id');
+            $table->bigInteger('barangay_id');
             $table->enum('gender', ['male', 'female']);
-            $table->integer('age')->nullable();
             $table->date('dob');
-            $table->string('civil_status');
             $table->string('email')->nullable();
+            $table->integer('age')->nullable();
             $table->string('mobile_num')->nullable();
+
+            $table->string('civil_status');
             $table->string('youth_group')->nullable();
             $table->string('educational_background');
             $table->string('youth_classification');

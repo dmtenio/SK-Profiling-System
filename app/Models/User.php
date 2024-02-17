@@ -18,11 +18,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
   
-     protected $fillable = [
-        'position_id', 'barangay_id', 'access_type', 'status', 'avatar',
-        'email', 'password'
-    ];
 
+    protected $fillable = [
+        'name', 'email', 'password', 'position_id', 'barangay_id', 'account_type', 'avatar',
+    ];
+    
     // Relationships
     public function position()
     {
