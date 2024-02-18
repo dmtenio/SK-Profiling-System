@@ -15,7 +15,7 @@
                     <h5 class="card-title">KK Survey Questionnaire</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('residents.store') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('residents.storeEntry') }}" method="POST" enctype="multipart/form-data">
                         @csrf
 
                         <h4 class="mb-3">I. PROFILE</h4>
@@ -612,6 +612,17 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // JavaScript to calculate age based on date of birth
+// document.getElementById('dob').addEventListener('change', function() {
+//     var dob = new Date(this.value);
+//     var today = new Date();
+//     var age = today.getFullYear() - dob.getFullYear();
+//     var monthDiff = today.getMonth() - dob.getMonth();
+//     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+//         age--;
+//     }
+//     document.getElementById('age').value = age;
+// });
+
 document.getElementById('dob').addEventListener('change', function() {
     var dob = new Date(this.value);
     var today = new Date();
@@ -621,7 +632,21 @@ document.getElementById('dob').addEventListener('change', function() {
         age--;
     }
     document.getElementById('age').value = age;
+
+    // Select the appropriate radio button based on age
+    var childYouthRadio = document.getElementById('youth_age_group_child_youth');
+    var coreYouthRadio = document.getElementById('youth_age_group_core_youth');
+    var youngAdultRadio = document.getElementById('youth_age_group_young_adult');
+
+    if (age >= 15 && age <= 17) {
+        childYouthRadio.checked = true;
+    } else if (age >= 18 && age <= 24) {
+        coreYouthRadio.checked = true;
+    } else if (age >= 15 && age <= 30) {
+        youngAdultRadio.checked = true;
+    }
 });
+
 
 // Function to show or hide specific needs options based on the selection of Youth Classification
 function toggleSpecificNeedsOptions() {

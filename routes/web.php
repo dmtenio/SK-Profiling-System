@@ -146,6 +146,7 @@ Route::resource('officials', OfficialController::class)->names([
 ]);
 
 Route::get('resident/youth/entry', [ResidentController::class, 'entry'])->name('residents.entry');
+Route::post('/resident/store-entry', [ResidentController::class, 'storeEntry'])->name('residents.storeEntry');
 
 // Resident routes
 Route::resource('residents', ResidentController::class)->names([
