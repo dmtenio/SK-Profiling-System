@@ -106,7 +106,8 @@
 
     @if(auth()->user()->hasRole(['barangay_admin', 'municipal_admin', 'provincial_admin', 'super_admin']))
       <li class="nav-item">
-        <a class="nav-link {{(request()->is('admin/reports')) ? '' : 'collapsed' }}" href="">
+        <a class="nav-link {{ request()->is('reports') ? '' : 'collapsed' }}" href="{{ route('reports.index') }}">
+  
           <i class="bi bi-file-bar-graph"></i>
           <span>Reports</span>
         </a>

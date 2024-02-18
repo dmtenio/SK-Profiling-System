@@ -10,6 +10,7 @@ use App\Http\Controllers\PurokController;
 use App\Http\Controllers\PositionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OfficialController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ResidentController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -157,4 +158,9 @@ Route::resource('residents', ResidentController::class)->names([
     'edit' => 'residents.edit',
     'update' => 'residents.update',
     'destroy' => 'residents.destroy',
+]);
+
+Route::get('reports/print', [ReportController::class, 'print'])->name('reports.print');
+Route::resource('reports', ReportController::class)->names([
+    'index' => 'reports.index',
 ]);
