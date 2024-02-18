@@ -46,8 +46,7 @@
                 <th>BIRTHDAY</th>
                 <th>SEX ASSIGNED AT BIRTH</th>
                 <th>CIVIL STATUS</th>
-                <th>YOUTH CLASSIFICATION</th>
-                <th>ISY/OSY-NEET/WY/YSN (PWD/IP)</th>
+                <th>YOUTH CLASSIFICATION ISY/OSY-NEET/WY/YSN (PWD/IP)</th>
                 <th>YOUTH AGE GROUP</th>
                 <th>EMAIL ADDRESS</th>
                 <th>CONTACT NUMBER</th>
@@ -73,11 +72,10 @@
                 <td>{{ $resident->gender }}</td>
                 <td>{{ $resident->civil_status }}</td>
                 <td>{{ $resident->youth_classification }}</td>
-                <td>{{ $resident->youth_specific_needs }}</td>
-                <td>{{ $resident->age_group }}</td>
+                <td>{{ $resident->youth_group }}</td>
                 <td>{{ $resident->email }}</td>
                 <td>{{ $resident->mobile_num }}</td>
-                <td>{{ $resident->home_address }}</td>
+                <td>{{ $resident->purok->name }}, {{ $resident->barangay->name }}, {{ $resident->barangay->municipality->name }}, {{ $resident->barangay->municipality->province->name }}, {{ $resident->barangay->municipality->province->region->name }}</td>
                 <td>{{ $resident->educational_background }}</td>
                 <td>{{ $resident->work_status }}</td>
                 <td>{{ $resident->national_voter == 'yes' ? 'Y' : 'N' }}</td>
