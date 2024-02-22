@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SKProfiler | User Login</title>
-<link rel="icon" href="{{ asset('assets/login-workspace/images/skp_logo.png') }}">
+<link rel="icon" href="{{ asset('assets/login-workspace/images/skp_s_logo.png') }}">
 {{-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback"> --}}
 {{-- <link rel="stylesheet" href="{{ asset('assets/login-workspace/vendors/plugins/fontawesome-free/css/all.min.css') }}"> --}}
 {{-- <link rel="stylesheet" href="{{ asset('assets/login-workspace/vendors/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}"> --}}

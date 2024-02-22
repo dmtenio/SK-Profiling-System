@@ -37,6 +37,7 @@
     <table>
         <thead>
             <tr>
+                <th>#</th>
                 <th>REGION</th>
                 <th>PROVINCE</th>
                 <th>CITY/MUNICIPALITY</th>
@@ -62,6 +63,7 @@
         <tbody>
             @foreach($residents as $resident)
             <tr>
+                <td>{{ $loop->iteration }}</td>
                 <td>{{ $resident->barangay->municipality->province->region->name }}</td>
                 <td>{{ $resident->barangay->municipality->province->name }}</td>
                 <td>{{ $resident->barangay->municipality->name }}</td>
