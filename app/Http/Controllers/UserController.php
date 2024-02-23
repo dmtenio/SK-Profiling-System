@@ -45,35 +45,40 @@ class UserController extends Controller
                 // If user is barangay admin, only show users in the same barangay
                 $users = User::with('barangay.municipality')
                     ->where('barangay_id', $user->barangay->id)
-                    ->where('account_type', '!=', 'barangay_admin') // Exclude barangay_admin accounts
+                    ->whereNotIn('account_type', ['municipal_admin', 'provincial_admin', 'super_admin']) // Exclude specified account types
                     ->get();
-    
+            
                 $barangays = [$user->barangay];
-            } elseif ($user->account_type == 'municipal_admin' && $user->barangay) {
+            }
+            elseif ($user->account_type == 'municipal_admin' && $user->barangay) {
                 // If user is municipal admin, show users under the municipality
                 $municipality = $user->barangay->municipality;
-    
+            
                 $users = User::with('barangay.municipality')
                     ->whereHas('barangay', function ($query) use ($municipality) {
                         $query->where('municipality_id', $municipality->id);
                     })
+                    ->whereNotIn('account_type', ['provincial_admin', 'super_admin']) // Exclude specified account types
                     ->get();
-    
+            
                 $barangays = $municipality->barangays;
-            } elseif ($user->account_type == 'provincial_admin') {
+            }
+            elseif ($user->account_type == 'provincial_admin') {
                 // If user is provincial admin, show all users in the province
                 $province = $user->barangay->municipality->province;
-    
+            
                 $users = User::with('barangay.municipality.province')
                     ->whereHas('barangay.municipality', function ($query) use ($province) {
                         $query->where('province_id', $province->id);
                     })
+                    ->where('account_type', '!=', 'super_admin') // Exclude super_admin accounts
                     ->get();
-    
+            
                 $barangays = Barangay::whereHas('municipality', function ($query) use ($province) {
                     $query->where('province_id', $province->id);
                 })->get();
-            } elseif ($user->account_type == 'super_admin') {
+            }
+             elseif ($user->account_type == 'super_admin') {
                 // If user is super admin, show all users
                 $users = User::with('barangay.municipality.province')->get();
                 $barangays = Barangay::with('municipality.province')->get();

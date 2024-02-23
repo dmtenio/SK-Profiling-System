@@ -90,7 +90,7 @@
       <!-- <a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Make an</span> Appointment</a> -->
       @if (Route::has('login'))
                     @auth
-                        <a href="{{ url('admin/dashboard') }}" class="appointment-btn scrollto">Dashboard</a>
+                        <a href="{{ url('/home') }}" class="appointment-btn scrollto">Dashboard</a>
 
                         @else
                         <a href="{{ route('login') }}" class="appointment-btn scrollto">Login</a>

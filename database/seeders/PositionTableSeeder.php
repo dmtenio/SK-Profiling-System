@@ -27,6 +27,8 @@ class PositionTableSeeder extends Seeder
                     '7th Councilor',
                     'SK-Secretary',
                     'SK-Treasurer',
+                    'SK Fed President',
+
                 ];
         
                 // Insert data into the positions table
