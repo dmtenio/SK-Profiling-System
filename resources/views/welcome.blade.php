@@ -116,7 +116,7 @@
       <div class="carousel-inner" role="listbox">
 
         <!-- Slide 1 -->
-        <div class="carousel-item active" style="background-image: url(assets/welcome/img/slide/slide-11.jpg)">
+        <div class="carousel-item active" style="background-image: url(assets/welcome/img/slide/slide-1.jpg)">
 
           {{-- <div class="container">
             <h2>Welcome to <span>RaCIS-TANDAG</span></h2>
@@ -126,7 +126,7 @@
         </div>
 
         <!-- Slide 2 -->
-        <div class="carousel-item" style="background-image: url(assets/welcome/img/slide/slide-12.jpg)">
+        <div class="carousel-item" style="background-image: url(assets/welcome/img/slide/slide-2.jpg)">
           <!-- <div class="container">
             <h2>Lorem Ipsum Dolor</h2>
             <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel.</p>
@@ -135,13 +135,63 @@
         </div>
 
         <!-- Slide 3 -->
-        <div class="carousel-item" style="background-image: url(assets/welcome/img/slide/slide-13.jpg)">
+        <div class="carousel-item" style="background-image: url(assets/welcome/img/slide/slide-3.jpg)">
           <!-- <div class="container">
             <h2>Sequi ea ut et est quaerat</h2>
             <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel.</p>
             <a href="#about" class="btn-get-started scrollto">Read More</a>
           </div> -->
         </div>
+
+
+        <!-- Slide 4 -->
+        <div class="carousel-item" style="background-image: url(assets/welcome/img/slide/slide-4.jpg)">
+          <!-- <div class="container">
+            <h2>Sequi ea ut et est quaerat</h2>
+            <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel.</p>
+            <a href="#about" class="btn-get-started scrollto">Read More</a>
+          </div> -->
+        </div>
+
+          <!-- Slide 5 -->
+        <div class="carousel-item" style="background-image: url(assets/welcome/img/slide/slide-5.jpg)">
+          <!-- <div class="container">
+            <h2>Sequi ea ut et est quaerat</h2>
+            <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel.</p>
+            <a href="#about" class="btn-get-started scrollto">Read More</a>
+          </div> -->
+        </div>
+
+
+        <!-- Slide 6 -->
+        <div class="carousel-item" style="background-image: url(assets/welcome/img/slide/slide-6.jpg)">
+          <!-- <div class="container">
+            <h2>Sequi ea ut et est quaerat</h2>
+            <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel.</p>
+            <a href="#about" class="btn-get-started scrollto">Read More</a>
+          </div> -->
+        </div>
+
+          <!-- Slide 7 -->
+        <div class="carousel-item" style="background-image: url(assets/welcome/img/slide/slide-7.jpg)">
+          <!-- <div class="container">
+            <h2>Sequi ea ut et est quaerat</h2>
+            <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel.</p>
+            <a href="#about" class="btn-get-started scrollto">Read More</a>
+          </div> -->
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="carousel-item" style="background-image: url(assets/welcome/img/slide/slide-8.jpg)">
+          <!-- <div class="container">
+            <h2>Sequi ea ut et est quaerat</h2>
+            <p>Ut velit est quam dolor ad a aliquid qui aliquid. Sequi ea ut et est quaerat sequi nihil ut aliquam. Occaecati alias dolorem mollitia ut. Similique ea voluptatem. Esse doloremque accusamus repellendus deleniti vel.</p>
+            <a href="#about" class="btn-get-started scrollto">Read More</a>
+          </div> -->
+        </div>
+
+        
+
 
       </div>
 

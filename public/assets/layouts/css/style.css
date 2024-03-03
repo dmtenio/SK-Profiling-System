@@ -851,6 +851,24 @@ h6 {
   background: #ffecdf;
 }
 
+.dashboard .underweight-card .card-icon {
+  color: #ff771d;
+  background: #ffecdf;
+}
+
+.dashboard .overweight-card .card-icon {
+  color: #eee;
+  background: #ed3c0d;
+}
+
+.dashboard .barangay-card .card-icon {
+  color: #000000;
+  background: #c4df4f;
+}
+
+
+
+
 /* Activity */
 .dashboard .activity {
   font-size: 14px;

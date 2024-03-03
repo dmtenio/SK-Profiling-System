@@ -10,6 +10,7 @@ use App\Models\Region;
 use App\Models\Resident;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class ResidentController extends Controller
@@ -556,8 +557,81 @@ class ResidentController extends Controller
      */
     public function update(Request $request, Resident $resident)
     {
-        //
+        // Validate the request data
+        $request->validate([
+            'last_name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'suffix' => 'nullable|string|max:255',
+            'purok_id' => 'required|string|max:255',
+            'barangay_id' => 'required|string|max:255', 
+            'gender' => 'required|in:male,female',
+            'dob' => 'required|date',
+            'email' => 'nullable|email|max:255',
+            'age' => 'nullable|integer|min:0',
+            'mobile_num' => 'nullable|string|max:255',
+            'civil_status' => 'required|string', 
+            'youth_group' => 'required|string', 
+            'educational_background' => 'required|string',
+            'youth_classification' => 'required|string', 
+            'youth_specific_needs' => 'nullable|string', 
+            'work_status' => 'required|string', 
+            'sk_voter' => 'required|in:yes,no', 
+            'voted_last_sk' => 'required|in:yes,no', 
+            'national_voter' => 'required|in:yes,no', 
+            'attended_assembly' => 'required|in:yes,no', 
+            'attended_yes_how_many' => 'nullable|string|max:255', 
+            'attended_no_why' => 'nullable|string|max:255', 
+            'avatar' => 'file|image|mimes:jpeg,png,jpg,gif|max:2048', 
+        ], [
+            'avatar.file' => 'The avatar must be a file.',
+            'avatar.image' => 'The avatar must be an image.',
+            'avatar.mimes' => 'The avatar must be a file of type: jpeg, png, jpg, gif.',
+            'avatar.max' => 'The avatar must not be larger than 2048 kilobytes.',
+        ]);
+    
+        // Update the resident's data
+        $resident->last_name = $request->last_name;
+        $resident->first_name = $request->first_name;
+        $resident->middle_name = $request->middle_name;
+        $resident->suffix = $request->suffix;
+        $resident->purok_id = $request->purok_id;
+        $resident->barangay_id = $request->barangay_id;
+        $resident->gender = $request->gender;
+        $resident->dob = $request->dob;
+        $resident->email = $request->email;
+        $resident->age = $request->age;
+        $resident->mobile_num = $request->mobile_num;
+        $resident->civil_status = $request->civil_status;
+        $resident->youth_group = $request->youth_group;
+        $resident->educational_background = $request->educational_background;
+        $resident->youth_classification = $request->youth_classification;
+        $resident->youth_specific_needs = $request->youth_specific_needs;
+        $resident->work_status = $request->work_status;
+        $resident->sk_voter = $request->sk_voter;
+        $resident->voted_last_sk = $request->voted_last_sk;
+        $resident->national_voter = $request->national_voter;
+        $resident->attended_assembly = $request->attended_assembly;
+        $resident->attended_yes_how_many = $request->attended_yes_how_many;
+        $resident->attended_no_why = $request->attended_no_why;
+        
+        // Handle avatar update
+        if ($request->hasFile('avatar')) {
+            // Delete old avatar if exists
+            if ($resident->avatar) {
+                Storage::delete('public/' . $resident->avatar);
+            }
+    
+            // Save new avatar
+            $avatarPath = $request->file('avatar')->store('avatars', 'public');
+            $resident->avatar = $avatarPath;
+        }
+    
+        $resident->save();
+    
+        return redirect()->route('residents.index')->with('success', 'Resident updated successfully!');
     }
+        
 
     /**
      * Remove the specified resource from storage.

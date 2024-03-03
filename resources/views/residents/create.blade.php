@@ -225,7 +225,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" value="young_adult" id="youth_age_group_young_adult" name="youth_group">
                                     <label class="form-check-label" for="youth_age_group_young_adult">
-                                        Young Adult (15-30 yrs old)
+                                        Young Adult (25-30 yrs old)
                                     </label>
                                 </div>
 
@@ -642,7 +642,7 @@ document.getElementById('dob').addEventListener('change', function() {
         childYouthRadio.checked = true;
     } else if (age >= 18 && age <= 24) {
         coreYouthRadio.checked = true;
-    } else if (age >= 15 && age <= 30) {
+    } else if (age >= 25 && age <= 30) {
         youngAdultRadio.checked = true;
     }
 });

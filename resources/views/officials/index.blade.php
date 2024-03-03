@@ -95,6 +95,22 @@
                                                         </select>
                                                     </div>
 
+                                                    <div class="mb-3">
+                                                        <label for="avatar" class="form-label">Image</label>
+                                                        <div class="d-flex align-items-center">
+                                                            <div id="avatarPreviewContainer" class="me-2 d-none">
+                                                                <img id="avatarPreview" src="{{ asset('assets/layouts/img/profile-img.png') }}" alt="Avatar" style="max-width: 100px; max-height: 100px;">
+                                                            </div>
+                                                            <div class="flex-grow-1">
+                                                                <input type="file" name="avatar" accept="image/*" class="form-control" id="avatar" onchange="previewAvatar(this)">
+                                                            </div>
+                                                            <div class="ms-2">
+                                                                <label for="avatar" class="btn btn-primary btn-sm" title="Upload new avatar"><i class="bi bi-upload"></i></label>
+                                                                <button type="button" class="btn btn-danger btn-sm" title="Remove avatar" onclick="removeAvatar()"><i class="bi bi-trash"></i></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-primary">Save</button>
@@ -220,6 +236,29 @@
             dropdownParent: modalEdit,
         });
     }
+
+
+    function previewAvatar(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#avatarPreview').attr('src', e.target.result);
+                $('#avatarPreviewContainer').removeClass('d-none');
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    
+
+    function removeAvatar() {
+        $('#avatar').val('');
+        $('#avatarPreviewContainer').addClass('d-none');
+    }
+
+    
 
       
     </script>

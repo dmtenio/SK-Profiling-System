@@ -122,19 +122,39 @@ class OfficialController extends Controller
             'barangay_id' => 'required|exists:barangays,id',
             'name' => 'required|string|max:255',
             'position_id' => 'required|exists:positions,id',
-
+            'avatar' => 'file|image|mimes:jpeg,png,jpg,gif|max:2048', // Updated validation for avatar
+        ], [
+            'avatar.file' => 'The avatar must be a file.',
+            'avatar.image' => 'The avatar must be an image.',
+            'avatar.mimes' => 'The avatar must be a file of type: jpeg, png, jpg, gif.',
+            'avatar.max' => 'The avatar must not be larger than 2048 kilobytes.',
         ]);
         
+        // Handle avatar upload
+        $avatarPath = null;
+        if ($request->hasFile('avatar')) {
+            $avatar = $request->file('avatar');
+            
+            // Check if the uploaded file is really an image
+            $mimeType = $avatar->getMimeType();
+            if (in_array($mimeType, ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'])) {
+                $avatarPath = $avatar->store('avatars', 'public');
+            } else {
+                return redirect()->back()->with('error', 'The uploaded file is not recognized as an image. Mime Type: ' . $mimeType);
+            }
+        }
+    
         Official::create([
             'barangay_id' => $request->barangay_id,
             'name'=>$request->name,
             'position_id' => $request->position_id,
+            'avatar' => $avatarPath, // Add avatar path to official data
         ]);
-
+    
         //redirect to official list
         return redirect()->route('officials.index')->with('success','Official Successfully added!');
-
     }
+    
 
     /**
      * Display the specified resource.
