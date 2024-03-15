@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barangay;
 use App\Models\Municipality;
+use App\Models\Official;
 use App\Models\Province;
 use App\Models\Purok;
 use App\Models\Region;
@@ -46,6 +47,30 @@ class ResidentController extends Controller
     {
         $puroks = Purok::where('barangay_id', $barangay_id)->get();
         return response()->json($puroks);
+    }
+
+    public function orga()
+    {
+        // Retrieve the authenticated user
+        $user = auth()->user();
+
+        // Fetch SK officials from the user's barangay
+        $officials = Official::whereHas('position', function ($query) {
+                $query->where('name', 'like', '%SK%');
+            })
+            ->where('barangay_id', $user->barangay->id)
+            ->orderBy('position_id')
+            ->get();
+
+        // Organize officials into an array according to their position
+        $organizedOfficials = [];
+        foreach ($officials as $official) {
+            $position = $official->position_id;
+            $organizedOfficials[$position][] = $official;
+        }
+
+        // Pass the organized officials to the view
+        return view('org', compact('organizedOfficials'));
     }
 
     /**

@@ -27,7 +27,8 @@
 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 
-<form action="{{route('officials.update',$official->id)}}" method="post">
+
+<form action="{{route('officials.update',$official->id)}}" method="post" enctype="multipart/form-data">
 @csrf  
 @method('PUT') 
 <div class="modal-body">
@@ -72,16 +73,16 @@
 <div class="mb-3">
     <label for="avatar" class="form-label">Image</label>
     <div class="d-flex align-items-center">
-        <div id="avatarPreviewContainer" class="me-2">
-            <img id="avatarPreview" src="{{ $official->avatar ? asset('storage/' . $official->avatar) : asset('assets/layouts/img/profile-img.png') }}" alt="Avatar" style="max-width: 100px; max-height: 100px;">
+        <div id="avatarPreviewContainer_{{$official->id}}" class="me-2 edit-avatarPreviewContainer {{$official->avatar ? '' : 'd-none'}}">
+            <img id="avatarPreview_{{$official->id}}" src="{{ $official->avatar ? asset('storage/' . $official->avatar) : asset('assets/layouts/img/profile-img.png') }}" alt="Avatar" style="max-width: 100px; max-height: 100px;">
         </div>
         <div class="flex-grow-1">
-            <input type="file" name="avatar" accept="image/*" class="form-control" id="avatar" onchange="editpreviewAvatar(this)">
+            <input type="file" name="avatar" accept="image/*" class="form-control edit-avatar" id="avatar_{{$official->id}}" onchange="editpreviewAvatar(this)">
         </div>
         <div class="ms-2">
-            <label for="avatar" class="btn btn-primary btn-sm" title="Upload new avatar"><i class="bi bi-upload"></i></label>
+            <label for="avatar_{{$official->id}}" class="btn btn-primary btn-sm" title="Upload new avatar"><i class="bi bi-upload"></i></label>
             <button type="button" class="btn btn-danger btn-sm" title="Remove avatar" onclick="editremoveAvatar()"><i class="bi bi-trash"></i></button>
-        </div>
+        </div>        
     </div>
 </div>
 

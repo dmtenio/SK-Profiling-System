@@ -12,6 +12,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\OfficialController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ResidentController;
+use App\Http\Controllers\StructureController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -145,6 +146,14 @@ Route::resource('officials', OfficialController::class)->names([
     'update' => 'officials.update',
     'destroy' => 'officials.destroy',
 ]);
+
+
+Route::resource('structures', StructureController::class)->names([
+    'index' => 'structures.index',
+
+]);
+
+
 
 Route::get('resident/youth/entry', [ResidentController::class, 'entry'])->name('residents.entry');
 Route::post('/resident/store-entry', [ResidentController::class, 'storeEntry'])->name('residents.storeEntry');

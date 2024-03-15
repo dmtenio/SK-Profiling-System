@@ -88,6 +88,7 @@
       </nav><!-- .navbar -->
 
       <!-- <a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Make an</span> Appointment</a> -->
+
       @if (Route::has('login'))
                     @auth
                         <a href="{{ url('/home') }}" class="appointment-btn scrollto">Dashboard</a>

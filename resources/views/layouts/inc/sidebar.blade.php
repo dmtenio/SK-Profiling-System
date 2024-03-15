@@ -10,12 +10,14 @@
         </li>
         <!-- End Dashboard Nav -->
 
+
         <li class="nav-item">
           <a class="nav-link {{(request()->is('resident/youth/entry')) ? '' : 'collapsed' }}" href="{{ route('residents.entry') }}">
             <i class="bi bi-person-check"></i>
             <span>New Entry</span>
           </a>
         </li><!-- End Profile Page Nav -->
+
 
         <li class="nav-heading">Master List</li>
 

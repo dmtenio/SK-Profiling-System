@@ -22,6 +22,15 @@
 
                 <h5 class="card-title">List of Officials</h5>
             
+                                    @if(auth()->user()->account_type == 'barangay_admin')
+                                        <!-- Button to view organizational structure -->
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="viewOrganizationalStructure()">
+                                            <i class="bi bi-diagram-2"></i>
+                                            View Organizational Structure
+                                        </button>
+                                    @endif
+            
+                                
                                    <!-- Button trigger add modal -->
                                    <button type="button" class="btn btn-primary btn-sm float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                        <i class="bi bi-plus-lg"></i>
@@ -37,7 +46,8 @@
                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                          </div>
     
-                                         <form action="{{route('officials.store')}}" method="post">
+                                         <form action="{{ route('officials.store') }}" method="post" enctype="multipart/form-data">
+
                                                                                 
                                             @csrf  
                             
@@ -173,6 +183,12 @@
 @push('page-scripts')
     <!-- Page specific script -->
     <script>
+    
+    function viewOrganizationalStructure() {
+        // Redirect to the page displaying the organizational structure
+        window.location.href = "{{ route('structures.index') }}";
+    }
+
 
       $(document).ready(function () {
           $('#officialtable').DataTable(
@@ -258,7 +274,26 @@
         $('#avatarPreviewContainer').addClass('d-none');
     }
 
+
+
+    function editpreviewAvatar(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            var officialId = input.id.split('_')[1]; // Extract the official ID from the input ID
+
+            reader.onload = function (e) {
+                $('#avatarPreview_' + officialId).attr('src', e.target.result);
+                $('#avatarPreviewContainer_' + officialId).removeClass('d-none');
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
     
+    function editremoveAvatar() {
+        $('.edit-avatar').val('');
+        $('.edit-avatarPreviewContainer').addClass('d-none');
+    }
 
       
     </script>

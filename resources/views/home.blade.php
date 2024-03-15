@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-<!-- @section('title','RaCIS-TANDAG') -->
 @section('page-title', 'Dashboard')
 
 @section('content')
@@ -33,7 +32,7 @@
 
             <!-- Sales Card -->
             <div class="col-xxl-4 col-md-4">
-              {{-- <a href="{{ route('pregnants.barangay.details') }}"> --}}
+              {{-- <a href="{{ route('youths.barangay.details') }}"> --}}
               <div class="card info-card sales-card">
                 <div class="card-body">
                   <h5 class="card-title">Total Youths</h5>

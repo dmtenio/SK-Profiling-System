@@ -6,6 +6,7 @@ use App\Models\Barangay;
 use App\Models\Official;
 use App\Models\Position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class OfficialController extends Controller
@@ -23,6 +24,7 @@ class OfficialController extends Controller
      * @return \Illuminate\Http\Response
      */
  
+
 
      public function index(Request $request)
      {
@@ -118,18 +120,23 @@ class OfficialController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'barangay_id' => 'required|exists:barangays,id',
             'name' => 'required|string|max:255',
             'position_id' => 'required|exists:positions,id',
-            'avatar' => 'file|image|mimes:jpeg,png,jpg,gif|max:2048', // Updated validation for avatar
-        ], [
+        ];
+    
+        if ($request->hasFile('avatar')) {
+            $rules['avatar'] = 'file|image|mimes:jpeg,png,jpg,gif|max:2048';
+        }
+    
+        $request->validate($rules, [
             'avatar.file' => 'The avatar must be a file.',
             'avatar.image' => 'The avatar must be an image.',
             'avatar.mimes' => 'The avatar must be a file of type: jpeg, png, jpg, gif.',
             'avatar.max' => 'The avatar must not be larger than 2048 kilobytes.',
         ]);
-        
+    
         // Handle avatar upload
         $avatarPath = null;
         if ($request->hasFile('avatar')) {
@@ -144,17 +151,18 @@ class OfficialController extends Controller
             }
         }
     
+        // Create the official
         Official::create([
             'barangay_id' => $request->barangay_id,
-            'name'=>$request->name,
+            'name' => $request->name,
             'position_id' => $request->position_id,
             'avatar' => $avatarPath, // Add avatar path to official data
         ]);
     
-        //redirect to official list
-        return redirect()->route('officials.index')->with('success','Official Successfully added!');
+        // Redirect to the official list
+        return redirect()->route('officials.index')->with('success', 'Official successfully added!');
     }
-    
+        
 
     /**
      * Display the specified resource.
@@ -191,21 +199,43 @@ class OfficialController extends Controller
             'barangay_id' => 'required|exists:barangays,id',
             'name' => 'required|string|max:255',
             'position_id' => 'required|exists:positions,id',
+            'avatar' => 'nullable|file|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
     
+        // Check if a new avatar has been uploaded
+        if ($request->hasFile('avatar')) {
+            // Handle the new avatar upload
+            $avatar = $request->file('avatar');
+    
+            // Check if the uploaded file is really an image
+            $mimeType = $avatar->getMimeType();
+            if (!in_array($mimeType, ['image/jpeg', 'image/png', 'image/jpg', 'image/gif'])) {
+                return redirect()->back()->with('error', 'The uploaded file is not recognized as an image. Mime Type: ' . $mimeType);
+            }
+    
+            // Store the new avatar
+            $avatarPath = $avatar->store('avatars', 'public');
+    
+            // Delete the old avatar if exists
+            if ($official->avatar) {
+                Storage::disk('public')->delete($official->avatar);
+            }
+    
+            // Update the avatar path in the database
+            $official->update(['avatar' => $avatarPath]);
+        }
+    
+        // Update other fields
         $official->update([
             'barangay_id' => $request->barangay_id,
-            'name'=>$request->name,
+            'name' => $request->name,
             'position_id' => $request->position_id,
         ]);
-
-        // $name->name=$request->name;
-        // $name->save();
-
-          //redirect to official list
-          return redirect()->route('officials.index')->with('success','Official Successfully updated!');
-
+    
+        // Redirect to the official list
+        return redirect()->route('officials.index')->with('success', 'Official Successfully updated!');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -221,4 +251,7 @@ class OfficialController extends Controller
         return redirect()->route('officials.index')->with('success','Official Successfully deleted!');
 
     }
+
+   
+
 }
