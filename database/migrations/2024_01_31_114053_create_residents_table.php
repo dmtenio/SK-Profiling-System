@@ -47,6 +47,7 @@ return new class extends Migration
             $table->bigInteger('encoded_by');
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

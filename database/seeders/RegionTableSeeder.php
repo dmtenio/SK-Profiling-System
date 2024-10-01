@@ -16,7 +16,7 @@ class RegionTableSeeder extends Seeder
      */
     public function run()
     {
-        $csvFile = storage_path('app/region.csv');
+        $csvFile = storage_path('csv/region.csv');
 
         // Check if the CSV file exists
         if (!File::exists($csvFile)) {

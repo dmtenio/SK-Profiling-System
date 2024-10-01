@@ -20,6 +20,7 @@ return new class extends Migration
             $table->bigInteger('position_id');
             $table->string('avatar')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

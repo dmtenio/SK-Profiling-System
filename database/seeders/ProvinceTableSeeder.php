@@ -16,7 +16,7 @@ class ProvinceTableSeeder extends Seeder
      */
     public function run()
     {
-        $csvFile = storage_path('app/province.csv');
+        $csvFile = storage_path('csv/province.csv');
 
         // Check if the CSV file exists
         if (!File::exists($csvFile)) {

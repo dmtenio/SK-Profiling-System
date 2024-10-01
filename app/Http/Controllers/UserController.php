@@ -116,13 +116,18 @@ class UserController extends Controller
                         return 'Super Admin';
                     }
                 })
-                ->addColumn('status', function ($user) {
-                    return $user->status === 'active' ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Inactive</span>';
+                    // ->addColumn('status', function ($user) {
+                    //     return $user->status === 'active' ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Inactive</span>';
+                    // })
+                ->addColumn('is_active', function ($user) {
+                    return $user->is_active ? '<span class="badge bg-success">Active</span>' : '<span class="badge bg-danger">Inactive</span>';
                 })
+                
                 ->addColumn('action', function ($user) {
                     return view('users.actions.btn', compact('user'))->render();
                 })
-                ->rawColumns(['status', 'action'])
+                    // ->rawColumns(['status', 'action'])
+                ->rawColumns(['is_active', 'action'])
                 ->toJson();
         }
     
@@ -270,7 +275,8 @@ class UserController extends Controller
                 'position_id' => 'required|exists:positions,id',
                 'account_type' => 'required',
                 'barangay_id' => 'required|exists:barangays,id',
-                'status' => 'required|in:active,inactive', 
+                    // 'status' => 'required|in:active,inactive', 
+                'is_active' => 'required|boolean', // Validation for the is_active field
                 'avatar' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Updated validation for avatar
             ]);
         
@@ -281,8 +287,10 @@ class UserController extends Controller
             $user->account_type = $request->account_type;
             
             $user->barangay_id = $request->barangay_id;
-            $user->status = $request->status; // Assign status field value
-        
+                // $user->status = $request->status; // Assign status field value
+            // Assign is_active field instead of status
+            $user->is_active = $request->is_active;
+
             // Update the password if provided
             if ($request->filled('password')) {
                 $user->password = Hash::make($request->password);

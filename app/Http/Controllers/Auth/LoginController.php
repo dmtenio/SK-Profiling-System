@@ -50,8 +50,11 @@ class LoginController extends Controller
 
         // Attempt to authenticate the user
         if (Auth::attempt($credentials)) {
-            // Check if the authenticated user is active
-            if (Auth::user()->status === 'active') {
+        
+                // Check if the authenticated user is active
+                // if (Auth::user()->status === 'active') {
+            // Check if the authenticated user is active using the is_active boolean
+            if (Auth::user()->is_active) {
                 return true;
             } else {
                 // If the user is inactive, logout and throw an exception

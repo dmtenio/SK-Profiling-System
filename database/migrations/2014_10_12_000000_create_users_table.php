@@ -19,13 +19,17 @@ return new class extends Migration
             $table->bigInteger('position_id');
             $table->bigInteger('barangay_id');
             $table->enum('account_type', ['barangay_user','barangay_admin', 'municipal_admin', 'provincial_admin', 'super_admin']);
-            $table->enum('status', ['active', 'inactive'])->default('active');
+          
+            // $table->enum('status', ['active', 'inactive'])->default('active');
+          
+            $table->boolean('is_active');
             $table->string('avatar')->nullable();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

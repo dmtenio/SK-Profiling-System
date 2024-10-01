@@ -79,7 +79,8 @@
                     {data: 'position', name: 'position.name'}, 
                     {data: 'barangay', name: 'barangay.name'},
                     {data: 'account_type', name: 'account_type'},
-                    {data: 'status', name: 'status'},
+                        // {data: 'status', name: 'status'},
+                    {data: 'is_active', name: 'is_active'},  // Updated from status to is_active
                   {data: 'action', name: 'action', orderable: false, searchable: false},
               ]
               }

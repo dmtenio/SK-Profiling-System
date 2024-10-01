@@ -22,7 +22,8 @@ class UserTableSeeder extends Seeder
                 'position_id' => 1,
                 'barangay_id' => 166802005,
                 'account_type' => 'super_admin',
-                'status' => 'active',
+                    // 'status' => 'active',
+                'is_active' => true, // Replaced 'status' with 'is_active'
                 'avatar' => null,
                 'email' => 'dalimarktenio@gmail.com',
                 'password' => bcrypt('password'),
@@ -32,7 +33,8 @@ class UserTableSeeder extends Seeder
                 'position_id' => 11,
                 'barangay_id' => 166802005,
                 'account_type' => 'municipal_admin',
-                'status' => 'active',
+                  // 'status' => 'active',
+                'is_active' => true, // Replaced 'status' with 'is_active'
                 'avatar' => null,
                 'email' => 'sthaliajoyce@gmail.com',
                 'password' => bcrypt('password'),
@@ -42,7 +44,8 @@ class UserTableSeeder extends Seeder
                 'position_id' => 2,
                 'barangay_id' => 166802005,
                 'account_type' => 'barangay_admin',
-                'status' => 'active',
+                    // 'status' => 'active',
+                'is_active' => true, // Replaced 'status' with 'is_active'
                 'avatar' => null,
                 'email' => 'brylleentegroangel@gmail.com',
                 'password' => bcrypt('password'),

@@ -85,11 +85,18 @@
                             </select>
                         </div>
 
+                            <!-- <div class="mb-3">
+                                <label for="status" class="form-label">Status</label>
+                                <select name="status" id="status" class="form-control">
+                                    <option value="active" @if($user->status === 'active') selected @endif>Active</option>
+                                    <option value="inactive" @if($user->status === 'inactive') selected @endif>Inactive</option>
+                                </select>
+                            </div> -->
                         <div class="mb-3">
-                            <label for="status" class="form-label">Status</label>
-                            <select name="status" id="status" class="form-control">
-                                <option value="active" @if($user->status === 'active') selected @endif>Active</option>
-                                <option value="inactive" @if($user->status === 'inactive') selected @endif>Inactive</option>
+                            <label for="is_active" class="form-label">Status</label>
+                            <select name="is_active" id="is_active" class="form-control">
+                                <option value="1" @if($user->is_active) selected @endif>Active</option>
+                                <option value="0" @if(!$user->is_active) selected @endif>Inactive</option>
                             </select>
                         </div>
 

@@ -16,7 +16,7 @@ class BarangayTableSeeder extends Seeder
      */
     public function run()
     {
-        $csvFile = storage_path('app/barangay.csv');
+        $csvFile = storage_path('csv/barangay.csv');
 
         // Check if the CSV file exists
         if (!File::exists($csvFile)) {

@@ -16,7 +16,7 @@ class MunicipalityTableSeeder extends Seeder
      */
     public function run()
     {
-        $csvFile = storage_path('app/municipality.csv');
+        $csvFile = storage_path('csv/municipality.csv');
 
         // Check if the CSV file exists
         if (!File::exists($csvFile)) {
